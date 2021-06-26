@@ -1,0 +1,29 @@
+bool isBST(Node* root) 
+    {
+        stack<Node*>st;vector<int>v,v1;set<int>s;
+        Node* curr=root;
+        while(curr!=NULL||st.size()>0)
+        {
+            while(curr!=NULL)
+            {
+                st.push(curr);
+                curr=curr->left;
+            }
+            curr=st.top();
+            st.pop();
+            v.push_back(curr->data);
+            v1.push_back(curr->data);
+            s.insert(curr->data);
+            curr=curr->right;
+        }
+        sort(v.begin(),v.end());
+        for(int i=0;i<v.size();i++)
+        {
+            if(v[i]!=v1[i])
+                return false;
+        }
+        if(s.size()!=v.size())
+        return false;
+        return true;
+        
+    }
