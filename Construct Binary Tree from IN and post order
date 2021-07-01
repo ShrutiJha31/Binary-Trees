@@ -1,0 +1,29 @@
+class Solution {
+public:
+    unordered_map<int,int>mp;
+    int idx=0;
+   TreeNode* solve(vector<int>& in, vector<int>& post,int ll,int ul)
+   {
+       if(ll>ul)
+           return NULL;
+       TreeNode* res=new TreeNode(post[idx--]);
+       if(ll==ul)
+           return res;
+       int mid=mp[res->val];
+          res->right=solve(in,post,mid+1,ul);                   //over here right will be first since we traversing from back
+        res->left=solve(in,post,ll,mid-1);
+     
+       return res;
+      
+   }
+    
+    TreeNode* buildTree(vector<int>& in, vector<int>& post) {
+          for(int i=0;i<in.size();i++)
+          {
+              mp[in[i]]=i;
+              
+          }
+        idx=in.size()-1;
+    return solve(in,post,0,post.size()-1);
+    }
+};
