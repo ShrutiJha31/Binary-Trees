@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int result;
+    int sumNumbers(TreeNode* root) {
+       int val=0;
+        findSum(root,val);
+        return result;
+    }
+    
+    void findSum(TreeNode* node,int val)
+    {
+        val=val*10+node->val;
+        if(node->right==NULL&&node->left==NULL)
+        result+=val;
+        if(node->right)
+            findSum(node->right,val);
+        if(node->left)
+            findSum(node->left,val);
+    }
+};
