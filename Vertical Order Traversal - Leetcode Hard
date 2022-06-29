@@ -1,0 +1,47 @@
+class Solution {
+public:
+    bool static comparator(pair<int,TreeNode*>a,pair<int,TreeNode*>b)
+    {
+        return a.second->val<b.second->val;
+    }
+    vector<vector<int>> verticalTraversal(TreeNode* root) {
+        map<int,vector<int>>mp;
+        queue<pair<int,TreeNode*>>q;
+        vector<pair<int,TreeNode*>>v;
+        q.push({0,root});
+        mp[0].push_back(root->val);
+        
+        while(!q.empty())
+        {
+           
+            
+            if(q.front().second->left)
+            {
+                v.push_back({q.front().first-1,q.front().second->left});
+                
+            }
+               if(q.front().second->right)
+            {
+                v.push_back({q.front().first+1,q.front().second->right});
+                
+            }
+            q.pop();
+            if(q.empty()&&!v.empty())
+            {
+                sort(v.begin(),v.end(),comparator);
+                for(auto itr:v)
+                {
+                    mp[itr.first].push_back(itr.second->val);
+                    q.push(itr);
+                }
+                v.clear();
+            }
+        }
+        vector<vector<int>>ans;
+        for(auto itr:mp)
+            ans.push_back(itr.second);
+        
+        return ans;
+        
+    }
+};
