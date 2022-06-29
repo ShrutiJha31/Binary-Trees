@@ -1,0 +1,15 @@
+class Solution {
+public:
+     bool isSameTree(TreeNode* p, TreeNode* q) {
+        if(p==NULL&&q==NULL)
+            return true;
+        if(p==NULL)
+            return false;
+        if(q==NULL)
+            return false;
+        return p->val==q->val&&isSameTree(p->left,q->right)&&isSameTree(p->right,q->left);
+    }
+    bool isSymmetric(TreeNode* root) {
+        return isSameTree(root->left,root->right);
+    }
+};
