@@ -1,0 +1,42 @@
+void obtainLeafNodes(Node *root,vector<int>&v)
+{
+    if(root->left)
+    obtainLeafNodes(root->left,v);
+    if(!root->left&&!root->right)
+    v.push_back(root->data);
+    if(root->right)
+     obtainLeafNodes(root->right,v);
+     return;
+}
+    vector <int> boundary(Node *root)
+    {
+       vector<int>v;
+       Node *curr=root->left;
+       if(root->left||root->right)
+       v.push_back(root->data);
+       while(curr!=NULL&&(curr->left!=NULL||curr->right!=NULL))
+       {
+           v.push_back(curr->data);
+           if(curr->left)
+           curr=curr->left;
+           else
+           curr=curr->right;
+       }
+       obtainLeafNodes(root,v);
+       curr=root->right;
+       vector<int>v1;
+         while(curr!=NULL&&(curr->left!=NULL||curr->right!=NULL))
+       {
+           v1.push_back(curr->data);
+           if(curr->right)
+           curr=curr->right;
+           else
+           curr=curr->left;
+       }
+       reverse(v1.begin(),v1.end());
+       for(auto itr:v1)
+       v.push_back(itr);
+       
+       return v;
+    }
+};
