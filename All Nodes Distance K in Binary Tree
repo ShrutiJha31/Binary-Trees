@@ -1,0 +1,76 @@
+class Solution {
+public:
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+        unordered_map<TreeNode*, TreeNode*>mp;
+        queue<pair<TreeNode*,TreeNode*>>q,q1;
+        q.push({root,NULL});
+        mp[root]=NULL;
+          vector<int>ans;
+        if(k==0)
+        {
+            ans.push_back(target->val);
+            return ans;
+        }
+        while(!q.empty())
+        {
+            mp[q.front().first]=q.front().second;
+            if(q.front().first->left)
+            {
+                q.push({q.front().first->left,q.front().first});
+            }
+            
+            if(q.front().first->right)
+            {
+                q.push({q.front().first->right,q.front().first});
+            }
+            
+            q.pop();
+        }
+        q.push({target,mp[target]});
+      
+        unordered_map<TreeNode*,int>vis;
+        while(!q.empty())
+        {
+            TreeNode *node = q.front().first;
+            TreeNode *par = q.front().second;
+            vis[node]=1;
+            q.pop();
+            if(par&&vis[par]==0)
+            {
+                q1.push({par,mp[par]});
+            }
+            if(node->left&&vis[node->left]==0)
+            {
+                q1.push({node->left,mp[node->left]});
+            }
+             if(node->right&&vis[node->right]==0)
+            {
+                q1.push({node->right,mp[node->right]});
+            }
+            if(q.empty())
+            {
+                k--;
+                if(k==0)
+                {
+                    while(!q1.empty())
+                    {
+                        ans.push_back(q1.front().first->val);
+                        q1.pop();
+                    }   
+                    
+                }
+                else
+                {
+                   while(!q1.empty())
+                    {
+                        q.push(q1.front());
+                        q1.pop();
+                    }  
+                }
+            }
+        }
+        return ans;
+        
+        
+    }
+};
