@@ -1,0 +1,28 @@
+class Solution {
+public:
+    void pushPreOrder(queue<TreeNode*>&q, TreeNode* root)
+    {
+        q.push(root);
+        if(root->left!=NULL)
+            pushPreOrder(q,root->left);
+        if(root->right)
+            pushPreOrder(q,root->right);
+    }
+    void flatten(TreeNode* root) {
+        if(root==NULL)
+            return ;
+        queue<TreeNode*>q;
+        pushPreOrder(q,root);
+        q.push(NULL);
+        while(!q.empty())
+        {
+            if(q.front()==NULL)
+                break;
+            TreeNode* node = q.front();
+            q.pop();
+            node->left=NULL;
+            node->right=q.front();
+        }
+        
+    }
+};
