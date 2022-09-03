@@ -1,0 +1,29 @@
+class Solution {
+  public:
+    unordered_map<string,int>mp;
+   string solve(Node* root)
+   {
+       if(!root)
+       return "$";
+       if(!root->left&&!root->right)
+       {
+           return to_string(root->data);
+       }
+       string str="";
+       str+=to_string(root->data);
+       str+="@"+solve(root->left);
+       str+="@"+solve(root->right);
+       mp[str]++;
+       return str;
+   }
+    int dupSub(Node *root) {
+         solve(root);
+         for(auto itr:mp)
+         {
+            
+             if(itr.second>=2)
+             return true;
+         }
+         return false;
+    }
+};
